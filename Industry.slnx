@@ -4,4 +4,8 @@
     <File Path="docker-compose.yml" />
   </Folder>
   <Project Path="Industry.Api/Industry.Api.csproj" />
+  <Project Path="Industry.Application/Industry.Application.csproj" />
+  <Project Path="Industry.Contracts/Industry.Contracts.csproj" />
+  <Project Path="Industry.Domain/Industry.Domain.csproj" />
+  <Project Path="Industry.Infrastructure/Industry.Infrastructure.csproj" />
 </Solution>
