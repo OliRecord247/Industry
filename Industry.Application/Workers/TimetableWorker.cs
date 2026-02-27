@@ -1,4 +1,4 @@
-﻿using Industry.Domain.Messaging;
+﻿using Industry.Application.Messaging;
 using Industry.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,12 +8,12 @@ namespace Industry.Application.Workers;
 public class TimetableWorker : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
-    private readonly IMessageBroker _broker;
+    private readonly IMqttService _mqttService;
 
-    public TimetableWorker(IServiceScopeFactory scopeFactory, IMessageBroker broker)
+    public TimetableWorker(IServiceScopeFactory scopeFactory, IMqttService mqttService)
     {
         _scopeFactory = scopeFactory;
-        _broker = broker;
+        _mqttService = mqttService;
     }
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,7 +27,7 @@ public class TimetableWorker : BackgroundService
 
                 foreach (var job in jobs)
                 {
-                    await _broker.PublishAsync($"machines/{job.MachineId}/tasks", job);
+                    await _mqttService.SendMachineCommand(job);
                     await repo.MarkAsSentAsync(job.Id);
                 }
             }
