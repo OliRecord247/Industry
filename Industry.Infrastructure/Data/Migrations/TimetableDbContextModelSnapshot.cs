@@ -50,7 +50,7 @@ namespace Industry.Infrastructure.Data.Migrations
 
                     b.HasIndex("ScheduledStart");
 
-                    b.ToTable("MachineJobs");
+                    b.ToTable("MachineJobs", (string)null);
                 });
 #pragma warning restore 612, 618
         }
