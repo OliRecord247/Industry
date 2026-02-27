@@ -13,6 +13,12 @@ public class JobRepository : IJobRepository
         _context = context;
     }
     
+    public async Task AddJobAsync(MachineJob job, CancellationToken cancellationToken)
+    {
+        await _context.MachineJobs.AddAsync(job, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+    
     public async Task<List<MachineJob>> GetPendingJobsAsync()
     {
         return await _context.MachineJobs
